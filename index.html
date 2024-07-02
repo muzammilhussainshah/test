@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Solutions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #444;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+            margin: 20px 0;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h2 {
+            margin-top: 0;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        p {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Algorithm Solutions</h1>
+    <div class="container">
+        <div class="question">
+            <h2>Q1: Sort Array in Descending Order</h2>
+            <input type="text" id="q1-input" placeholder="Enter array elements separated by comma">
+            <button onclick="solveQ1()">Sort</button>
+            <p id="q1-result"></p>
+        </div>
+        <div class="question">
+            <h2>Q2: Check if Palindrome</h2>
+            <input type="text" id="q2-input" placeholder="Enter a string">
+            <button onclick="solveQ2()">Check</button>
+            <p id="q2-result"></p>
+        </div>
+        <div class="question">
+            <h2>Q3: Sum of Two Largest Numbers</h2>
+            <input type="text" id="q3-input" placeholder="Enter array elements separated by comma">
+            <button onclick="solveQ3()">Sum</button>
+            <p id="q3-result"></p>
+        </div>
+        <div class="question">
+            <h2>Q4: Find Missing Elements</h2>
+            <input type="text" id="q4-input" placeholder="Enter array elements separated by comma">
+            <button onclick="solveQ4()">Find Missing</button>
+            <p id="q4-result"></p>
+        </div>
+        <div class="question">
+            <h2>Q5: Most Repeated Number</h2>
+            <input type="text" id="q5-input" placeholder="Enter array elements separated by comma">
+            <button onclick="solveQ5()">Find Most Repeated</button>
+            <p id="q5-result"></p>
+        </div>
+        <div class="question">
+            <h2>Q6: Rotate Array to the Right</h2>
+            <input type="text" id="q6-input" placeholder="Enter array elements separated by comma">
+            <button onclick="solveQ6()">Rotate</button>
+            <p id="q6-result"></p>
+        </div>
+    </div>
+
+    <script>
+        function parseArrayInput(inputId) {
+            const input = document.getElementById(inputId).value;
+            return input.split(',').map(Number);
+        }
+
+        function sortDescending(arr) {
+            let n = arr.length;
+            for (let i = 0; i < n - 1; i++) {
+                for (let j = 0; j < n - i - 1; j++) {
+                    if (arr[j] < arr[j + 1]) {
+                        let temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+
+        function solveQ1() {
+            const arr = parseArrayInput('q1-input');
+            const sortedArr = sortDescending(arr);
+            document.getElementById('q1-result').textContent = `Sorted array: ${sortedArr}`;
+        }
+
+        function isPalindrome(str) {
+            let len = str.length;
+            for (let i = 0; i < len / 2; i++) {
+                if (str[i] !== str[len - 1 - i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function solveQ2() {
+            const str = document.getElementById('q2-input').value;
+            const result = isPalindrome(str);
+            document.getElementById('q2-result').textContent = `Is palindrome: ${result}`;
+        }
+
+        function sumTwoLargestNumbers(arr) {
+            let firstMax = -Infinity;
+            let secondMax = -Infinity;
+
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] > firstMax) {
+                    secondMax = firstMax;
+                    firstMax = arr[i];
+                } else if (arr[i] > secondMax) {
+                    secondMax = arr[i];
+                }
+            }
+
+            return firstMax + secondMax;
+        }
+
+        function solveQ3() {
+            const arr = parseArrayInput('q3-input');
+            const sum = sumTwoLargestNumbers(arr);
+            document.getElementById('q3-result').textContent = `Sum of two largest numbers: ${sum}`;
+        }
+
+        function findMissingElements(arr) {
+            let max = Math.max(...arr);
+            let present = Array(max + 1).fill(false);
+            let missing = [];
+
+            for (let i = 0; i < arr.length; i++) {
+                present[arr[i]] = true;
+            }
+
+            for (let i = 0; i <= max; i++) {
+                if (!present[i]) {
+                    missing.push(i);
+                }
+            }
+
+            return missing;
+        }
+
+        function solveQ4() {
+            const arr = parseArrayInput('q4-input');
+            const missing = findMissingElements(arr);
+            document.getElementById('q4-result').textContent = `Missing elements: ${missing}`;
+        }
+
+        function mostRepeatedNumber(arr) {
+            let count = {};
+            let maxCount = 0;
+            let maxNumber = null;
+
+            for (let i = 0; i < arr.length; i++) {
+                let num = arr[i];
+                count[num] = (count[num] || 0) + 1;
+                if (count[num] > maxCount) {
+                    maxCount = count[num];
+                    maxNumber = num;
+                }
+            }
+
+            return `${maxNumber} is repeated ${maxCount} times`;
+        }
+
+        function solveQ5() {
+            const arr = parseArrayInput('q5-input');
+            const result = mostRepeatedNumber(arr);
+            document.getElementById('q5-result').textContent = result;
+        }
+
+        function rotateRight(arr) {
+            let n = arr.length;
+            if (n === 0) return arr;
+            let lastElement = arr[n - 1];
+
+            for (let i = n - 1; i > 0; i--) {
+                arr[i] = arr[i - 1];
+            }
+
+            arr[0] = lastElement;
+            return arr;
+        }
+
+        function solveQ6() {
+            const arr = parseArrayInput('q6-input');
+            const rotatedArr = rotateRight(arr);
+            document.getElementById('q6-result').textContent = `Rotated array: ${rotatedArr}`;
+        }
+    </script>
+</body>
+</html>
